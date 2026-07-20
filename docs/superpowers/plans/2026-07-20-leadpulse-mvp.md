@@ -2,7 +2,7 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build a polished, local-first lead-management portfolio demo.
+**Goal:** Build a polished, local-first lead-management product.
 
 **Architecture:** A Vite React single page renders typed local lead data and derives dashboard metrics from client-side state. Browser storage persists user changes between sessions; no server is introduced.
 
@@ -25,7 +25,7 @@
 **Interfaces:**
 - Produces: `Lead`, `LeadStatus`, `LeadOwner`, `initialLeads`, and `getAttentionLeads(leads)`.
 
-- [ ] Add a Vite React TypeScript application with a type-safe `Lead` model and twelve realistic demo leads.
+- [ ] Add a Vite React TypeScript application with a type-safe `Lead` model and twelve realistic seed leads.
 - [ ] Test that attention leads include overdue and unassigned open leads, but exclude won and lost leads.
 - [ ] Render the dashboard shell with summary metrics and verify `npm run test` passes.
 

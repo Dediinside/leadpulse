@@ -1,19 +1,19 @@
 # LeadPulse
 
-LeadPulse is a portfolio prototype for service teams that need a clear view of new client leads and response deadlines.
+LeadPulse помогает сервисным командам держать новые клиентские обращения в работе и не пропускать сроки ответа.
 
-## Current iteration
+## Текущая версия
 
-The first iteration is a static, responsive dashboard with realistic local data, response metrics, and a visual attention queue. It deliberately has no authentication, API, integrations, or persistent edits yet.
+В текущей версии есть адаптивная рабочая панель, показатели по обращениям и очередь заявок, требующих ответа. Авторизация, API, интеграции и сохранение изменений появятся в следующих итерациях.
 
-## Run locally
+## Запуск
 
 ```bash
 npm install
 npm run dev
 ```
 
-## Verify
+## Проверка
 
 ```bash
 npm test
