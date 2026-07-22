@@ -1,8 +1,10 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest';
-import { render, screen } from '@testing-library/react';
-import { expect, test } from 'vitest';
+import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { afterEach, expect, test } from 'vitest';
 import App from './App';
+
+afterEach(cleanup);
 
 test('shows the attention count and lead names', () => {
   render(<App />);
@@ -10,4 +12,13 @@ test('shows the attention count and lead names', () => {
   expect(screen.getByText('Требуют внимания')).toBeInTheDocument();
   expect(screen.getByText('2')).toBeInTheDocument();
   expect(screen.getByText('Елена Брукс')).toBeInTheDocument();
+});
+
+test('filters leads by customer name', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'София' } });
+
+  expect(screen.getByText('София Патель')).toBeInTheDocument();
+  expect(screen.queryByText('Елена Брукс')).not.toBeInTheDocument();
 });

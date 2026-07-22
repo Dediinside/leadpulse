@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { getAttentionLeads, initialLeads, leadStatuses, type LeadStatus } from './data/leads';
 
 const statusLabel: Record<LeadStatus, string> = {
@@ -11,9 +12,13 @@ const statusLabel: Record<LeadStatus, string> = {
 const displayNow = new Date('2026-07-20T11:00:00.000Z');
 
 export default function App() {
+  const [query, setQuery] = useState('');
   const attention = getAttentionLeads(initialLeads, displayNow);
   const openLeads = initialLeads.filter(({ status }) => !['won', 'lost'].includes(status));
   const answeredToday = initialLeads.filter(({ answeredAt }) => answeredAt?.startsWith('2026-07-20')).length;
+  const visibleLeads = initialLeads.filter(({ customer, company }) =>
+    `${customer} ${company}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
+  );
 
   return (
     <main className="app-shell">
@@ -61,10 +66,18 @@ export default function App() {
             <p className="eyebrow">Входящие</p>
             <h2 id="inbox-heading">Последние заявки</h2>
           </div>
-          <button className="text-action" type="button">Все заявки <span aria-hidden="true">→</span></button>
+          <label className="search-field">
+            <span className="sr-only">Поиск заявок</span>
+            <input
+              type="search"
+              placeholder="Поиск по имени или компании"
+              value={query}
+              onChange={({ target }) => setQuery(target.value)}
+            />
+          </label>
         </div>
         <div className="lead-list" role="list">
-          {initialLeads.map((lead) => {
+          {visibleLeads.map((lead) => {
             const needsAttention = attention.some(({ id }) => id === lead.id);
             return (
               <article className="lead-row" key={lead.id} role="listitem">
