@@ -40,6 +40,8 @@ h2 { margin: 0; font-size: 28px; letter-spacing: -.055em; }
 .search-field input::placeholder { color: #73877d; }
 .text-action { border: 0; padding: 5px 0; background: transparent; color: #365f4a; cursor: pointer; font-size: 13px; font-weight: 700; }
 .lead-list { overflow: hidden; border: 1px solid #c6d3ca; border-radius: 7px; background: #f9fbf8; }
+.empty-state { padding: 34px 20px; text-align: center; }
+.empty-state p { margin: 7px 0; color: #64776d; font-size: 13px; }
 .lead-row { display: grid; grid-template-columns: 14px minmax(150px, .9fr) 2fr 100px 95px; align-items: center; gap: 18px; min-height: 82px; padding: 16px 20px; border-bottom: 1px solid #dbe4dd; }
 .lead-row:last-child { border-bottom: 0; }
 .pulse-pin { width: 8px; height: 8px; border-radius: 99px; background: #a6b6aa; }

@@ -29,6 +29,13 @@ export default function App() {
     `${customer} ${company}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
   ).filter(({ status: leadStatus }) => status === 'all' || leadStatus === status)
     .filter(({ source: leadSource }) => source === 'all' || leadSource === source);
+  const hasFilters = Boolean(query || status !== 'all' || source !== 'all');
+
+  const resetFilters = () => {
+    setQuery('');
+    setStatus('all');
+    setSource('all');
+  };
 
   return (
     <main className="app-shell">
@@ -103,7 +110,7 @@ export default function App() {
           </div>
         </div>
         <div className="lead-list" role="list">
-          {visibleLeads.map((lead) => {
+          {visibleLeads.length > 0 ? visibleLeads.map((lead) => {
             const needsAttention = attention.some(({ id }) => id === lead.id);
             return (
               <article className="lead-row" key={lead.id} role="listitem">
@@ -117,7 +124,13 @@ export default function App() {
                 <span className="owner">{lead.owner ?? 'Не назначен'}</span>
               </article>
             );
-          })}
+          }) : (
+            <div className="empty-state">
+              <strong>Ничего не найдено</strong>
+              <p>Измените параметры поиска или сбросьте фильтры.</p>
+              {hasFilters && <button className="text-action" type="button" onClick={resetFilters}>Сбросить фильтры</button>}
+            </div>
+          )}
         </div>
       </section>
     </main>

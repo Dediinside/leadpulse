@@ -40,3 +40,15 @@ test('filters leads by source', () => {
   expect(screen.getByText('София Патель')).toBeInTheDocument();
   expect(screen.queryByText('Марк Рид')).not.toBeInTheDocument();
 });
+
+test('shows an empty state and resets filters', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'нет такой заявки' } });
+
+  expect(screen.getByText('Ничего не найдено')).toBeInTheDocument();
+
+  fireEvent.click(screen.getByRole('button', { name: 'Сбросить фильтры' }));
+
+  expect(screen.getByText('Елена Брукс')).toBeInTheDocument();
+});
