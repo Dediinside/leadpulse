@@ -13,12 +13,13 @@ const displayNow = new Date('2026-07-20T11:00:00.000Z');
 
 export default function App() {
   const [query, setQuery] = useState('');
+  const [status, setStatus] = useState<LeadStatus | 'all'>('all');
   const attention = getAttentionLeads(initialLeads, displayNow);
   const openLeads = initialLeads.filter(({ status }) => !['won', 'lost'].includes(status));
   const answeredToday = initialLeads.filter(({ answeredAt }) => answeredAt?.startsWith('2026-07-20')).length;
   const visibleLeads = initialLeads.filter(({ customer, company }) =>
     `${customer} ${company}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
-  );
+  ).filter(({ status: leadStatus }) => status === 'all' || leadStatus === status);
 
   return (
     <main className="app-shell">
@@ -66,15 +67,24 @@ export default function App() {
             <p className="eyebrow">Входящие</p>
             <h2 id="inbox-heading">Последние заявки</h2>
           </div>
-          <label className="search-field">
-            <span className="sr-only">Поиск заявок</span>
-            <input
-              type="search"
-              placeholder="Поиск по имени или компании"
-              value={query}
-              onChange={({ target }) => setQuery(target.value)}
-            />
-          </label>
+          <div className="lead-controls">
+            <label className="search-field">
+              <span className="sr-only">Поиск заявок</span>
+              <input
+                type="search"
+                placeholder="Поиск по имени или компании"
+                value={query}
+                onChange={({ target }) => setQuery(target.value)}
+              />
+            </label>
+            <label className="status-filter">
+              <span className="sr-only">Статус заявки</span>
+              <select value={status} onChange={({ target }) => setStatus(target.value as LeadStatus | 'all')}>
+                <option value="all">Все статусы</option>
+                {leadStatuses.map((item) => <option key={item} value={item}>{statusLabel[item]}</option>)}
+              </select>
+            </label>
+          </div>
         </div>
         <div className="lead-list" role="list">
           {visibleLeads.map((lead) => {

@@ -33,7 +33,10 @@ h1 { max-width: 650px; margin-bottom: 10px; font-size: clamp(42px, 7vw, 82px); l
 .workspace { margin-top: 42px; }
 .section-heading { display: flex; align-items: end; justify-content: space-between; margin-bottom: 16px; }
 h2 { margin: 0; font-size: 28px; letter-spacing: -.055em; }
-.search-field input { width: 248px; border: 1px solid #c6d3ca; border-radius: 4px; padding: 10px 12px; background: #f9fbf8; color: #172520; font-size: 13px; }
+.lead-controls { display: flex; gap: 8px; }
+.search-field input, .status-filter select { border: 1px solid #c6d3ca; border-radius: 4px; padding: 10px 12px; background: #f9fbf8; color: #172520; font-size: 13px; }
+.search-field input { width: 248px; }
+.status-filter select { cursor: pointer; }
 .search-field input::placeholder { color: #73877d; }
 .text-action { border: 0; padding: 5px 0; background: transparent; color: #365f4a; cursor: pointer; font-size: 13px; font-weight: 700; }
 .lead-list { overflow: hidden; border: 1px solid #c6d3ca; border-radius: 7px; background: #f9fbf8; }
@@ -58,7 +61,7 @@ h2 { margin: 0; font-size: 28px; letter-spacing: -.055em; }
   .metric strong { margin-top: 16px; }
   .lead-row { grid-template-columns: 12px 1fr auto; gap: 12px; }
   .section-heading { align-items: start; flex-direction: column; gap: 14px; }
-  .search-field, .search-field input { width: 100%; }
+  .lead-controls, .search-field, .search-field input, .status-filter, .status-filter select { width: 100%; }
   .lead-message, .owner { display: none; }
   .lead-identity { grid-column: 2; }
   .status { grid-column: 3; }

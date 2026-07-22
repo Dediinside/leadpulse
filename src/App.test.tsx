@@ -22,3 +22,12 @@ test('filters leads by customer name', () => {
   expect(screen.getByText('София Патель')).toBeInTheDocument();
   expect(screen.queryByText('Елена Брукс')).not.toBeInTheDocument();
 });
+
+test('filters leads by status', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByLabelText('Статус заявки'), { target: { value: 'qualified' } });
+
+  expect(screen.getByText('София Патель')).toBeInTheDocument();
+  expect(screen.queryByText('Марк Рид')).not.toBeInTheDocument();
+});
