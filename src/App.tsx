@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { getAttentionLeads, initialLeads, leadStatuses, type LeadStatus } from './data/leads';
+import { getAttentionLeads, initialLeads, leadStatuses, type Lead, type LeadStatus } from './data/leads';
 
 const statusLabel: Record<LeadStatus, string> = {
   new: 'Новая',
@@ -9,17 +9,26 @@ const statusLabel: Record<LeadStatus, string> = {
   lost: 'Не подошла',
 };
 
+const sourceLabel: Record<Lead['source'], string> = {
+  Website: 'Сайт',
+  Referral: 'Рекомендация',
+  Instagram: 'Instagram',
+  Email: 'Почта',
+};
+
 const displayNow = new Date('2026-07-20T11:00:00.000Z');
 
 export default function App() {
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState<LeadStatus | 'all'>('all');
+  const [source, setSource] = useState<Lead['source'] | 'all'>('all');
   const attention = getAttentionLeads(initialLeads, displayNow);
   const openLeads = initialLeads.filter(({ status }) => !['won', 'lost'].includes(status));
   const answeredToday = initialLeads.filter(({ answeredAt }) => answeredAt?.startsWith('2026-07-20')).length;
   const visibleLeads = initialLeads.filter(({ customer, company }) =>
     `${customer} ${company}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
-  ).filter(({ status: leadStatus }) => status === 'all' || leadStatus === status);
+  ).filter(({ status: leadStatus }) => status === 'all' || leadStatus === status)
+    .filter(({ source: leadSource }) => source === 'all' || leadSource === source);
 
   return (
     <main className="app-shell">
@@ -82,6 +91,13 @@ export default function App() {
               <select value={status} onChange={({ target }) => setStatus(target.value as LeadStatus | 'all')}>
                 <option value="all">Все статусы</option>
                 {leadStatuses.map((item) => <option key={item} value={item}>{statusLabel[item]}</option>)}
+              </select>
+            </label>
+            <label className="status-filter">
+              <span className="sr-only">Источник обращения</span>
+              <select value={source} onChange={({ target }) => setSource(target.value as Lead['source'] | 'all')}>
+                <option value="all">Все источники</option>
+                {Object.entries(sourceLabel).map(([item, label]) => <option key={item} value={item}>{label}</option>)}
               </select>
             </label>
           </div>

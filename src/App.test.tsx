@@ -31,3 +31,12 @@ test('filters leads by status', () => {
   expect(screen.getByText('София Патель')).toBeInTheDocument();
   expect(screen.queryByText('Марк Рид')).not.toBeInTheDocument();
 });
+
+test('filters leads by source', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByLabelText('Источник обращения'), { target: { value: 'Instagram' } });
+
+  expect(screen.getByText('София Патель')).toBeInTheDocument();
+  expect(screen.queryByText('Марк Рид')).not.toBeInTheDocument();
+});
