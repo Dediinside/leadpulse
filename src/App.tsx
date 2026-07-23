@@ -25,8 +25,8 @@ export default function App() {
   const attention = getAttentionLeads(initialLeads, displayNow);
   const openLeads = initialLeads.filter(({ status }) => !['won', 'lost'].includes(status));
   const answeredToday = initialLeads.filter(({ answeredAt }) => answeredAt?.startsWith('2026-07-20')).length;
-  const visibleLeads = initialLeads.filter(({ customer, company }) =>
-    `${customer} ${company}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
+  const visibleLeads = initialLeads.filter(({ customer, company, email }) =>
+    `${customer} ${company} ${email}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
   ).filter(({ status: leadStatus }) => status === 'all' || leadStatus === status)
     .filter(({ source: leadSource }) => source === 'all' || leadSource === source);
   const hasFilters = Boolean(query || status !== 'all' || source !== 'all');
@@ -88,7 +88,7 @@ export default function App() {
               <span className="sr-only">Поиск заявок</span>
               <input
                 type="search"
-                placeholder="Поиск по имени или компании"
+                placeholder="Поиск по имени, компании или email"
                 value={query}
                 onChange={({ target }) => setQuery(target.value)}
               />

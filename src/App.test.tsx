@@ -23,6 +23,15 @@ test('filters leads by customer name', () => {
   expect(screen.queryByText('Елена Брукс')).not.toBeInTheDocument();
 });
 
+test('filters leads by email', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'amina@cedarhouse.com' } });
+
+  expect(screen.getByText('Амина Чен')).toBeInTheDocument();
+  expect(screen.queryByText('Елена Брукс')).not.toBeInTheDocument();
+});
+
 test('filters leads by status', () => {
   render(<App />);
 
