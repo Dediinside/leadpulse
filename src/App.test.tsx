@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import '@testing-library/jest-dom/vitest';
-import { cleanup, fireEvent, render, screen } from '@testing-library/react';
+import { cleanup, fireEvent, render, screen, within } from '@testing-library/react';
 import { afterEach, expect, test } from 'vitest';
 import App from './App';
 
@@ -51,4 +51,10 @@ test('shows an empty state and resets filters', () => {
   fireEvent.click(screen.getByRole('button', { name: 'Сбросить фильтры' }));
 
   expect(screen.getByText('Елена Брукс')).toBeInTheDocument();
+});
+
+test('shows the lead source in the list', () => {
+  render(<App />);
+
+  expect(within(screen.getByRole('list')).getAllByText('Сайт')).toHaveLength(2);
 });

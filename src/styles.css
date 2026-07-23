@@ -42,13 +42,13 @@ h2 { margin: 0; font-size: 28px; letter-spacing: -.055em; }
 .lead-list { overflow: hidden; border: 1px solid #c6d3ca; border-radius: 7px; background: #f9fbf8; }
 .empty-state { padding: 34px 20px; text-align: center; }
 .empty-state p { margin: 7px 0; color: #64776d; font-size: 13px; }
-.lead-row { display: grid; grid-template-columns: 14px minmax(150px, .9fr) 2fr 100px 95px; align-items: center; gap: 18px; min-height: 82px; padding: 16px 20px; border-bottom: 1px solid #dbe4dd; }
+.lead-row { display: grid; grid-template-columns: 14px minmax(150px, .9fr) 2fr 86px 100px 95px; align-items: center; gap: 18px; min-height: 82px; padding: 16px 20px; border-bottom: 1px solid #dbe4dd; }
 .lead-row:last-child { border-bottom: 0; }
 .pulse-pin { width: 8px; height: 8px; border-radius: 99px; background: #a6b6aa; }
 .pulse-pin.is-urgent { background: #d76a32; box-shadow: 0 0 0 5px #fae2d7; }
 .lead-identity { display: grid; gap: 3px; }
 .lead-identity strong { font-size: 14px; letter-spacing: -.02em; }
-.lead-identity span, .lead-message, .owner { color: #64776d; font-size: 12px; }
+.lead-identity span, .lead-message, .source, .owner { color: #64776d; font-size: 12px; }
 .lead-message { margin: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .status { width: fit-content; padding: 5px 8px; border-radius: 99px; background: #e5ece6; color: #4d6256; font-size: 11px; font-weight: 700; }
 .status-qualified { background: #e2edf1; color: #3d6875; }
@@ -67,4 +67,5 @@ h2 { margin: 0; font-size: 28px; letter-spacing: -.055em; }
   .lead-message, .owner { display: none; }
   .lead-identity { grid-column: 2; }
   .status { grid-column: 3; }
+  .source { display: none; }
 }
