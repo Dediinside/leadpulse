@@ -84,3 +84,12 @@ test('shows the number of matching leads', () => {
 
   expect(screen.getByText('Найдено: 1')).toBeInTheDocument();
 });
+
+test('filters leads without an assigned owner', () => {
+  render(<App />);
+
+  fireEvent.click(screen.getByLabelText('Без ответственного'));
+
+  expect(screen.getByText('Елена Брукс')).toBeInTheDocument();
+  expect(screen.queryByText('Ной Уильямс')).not.toBeInTheDocument();
+});

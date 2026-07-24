@@ -35,6 +35,7 @@ h1 { max-width: 650px; margin-bottom: 10px; font-size: clamp(42px, 7vw, 82px); l
 h2 { margin: 0; font-size: 28px; letter-spacing: -.055em; }
 .lead-count { margin: 5px 0 0; color: #64776d; font-size: 12px; }
 .lead-controls { display: flex; gap: 8px; }
+.owner-filter { display: inline-flex; align-items: center; gap: 6px; color: #4d6256; font-size: 12px; white-space: nowrap; }
 .search-field input, .status-filter select { border: 1px solid #c6d3ca; border-radius: 4px; padding: 10px 12px; background: #f9fbf8; color: #172520; font-size: 13px; }
 .search-field input { width: 248px; }
 .status-filter select { cursor: pointer; }

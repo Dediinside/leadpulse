@@ -22,19 +22,22 @@ export default function App() {
   const [query, setQuery] = useState('');
   const [status, setStatus] = useState<LeadStatus | 'all'>('all');
   const [source, setSource] = useState<Lead['source'] | 'all'>('all');
+  const [withoutOwner, setWithoutOwner] = useState(false);
   const attention = getAttentionLeads(initialLeads, displayNow);
   const openLeads = initialLeads.filter(({ status }) => !['won', 'lost'].includes(status));
   const answeredToday = initialLeads.filter(({ answeredAt }) => answeredAt?.startsWith('2026-07-20')).length;
   const visibleLeads = initialLeads.filter(({ customer, company, email, phone }) =>
     `${customer} ${company} ${email} ${phone}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
   ).filter(({ status: leadStatus }) => status === 'all' || leadStatus === status)
-    .filter(({ source: leadSource }) => source === 'all' || leadSource === source);
-  const hasFilters = Boolean(query || status !== 'all' || source !== 'all');
+    .filter(({ source: leadSource }) => source === 'all' || leadSource === source)
+    .filter(({ owner }) => !withoutOwner || !owner);
+  const hasFilters = Boolean(query || status !== 'all' || source !== 'all' || withoutOwner);
 
   const resetFilters = () => {
     setQuery('');
     setStatus('all');
     setSource('all');
+    setWithoutOwner(false);
   };
 
   return (
@@ -107,6 +110,10 @@ export default function App() {
                 <option value="all">Все источники</option>
                 {Object.entries(sourceLabel).map(([item, label]) => <option key={item} value={item}>{label}</option>)}
               </select>
+            </label>
+            <label className="owner-filter">
+              <input type="checkbox" checked={withoutOwner} onChange={({ target }) => setWithoutOwner(target.checked)} />
+              Без ответственного
             </label>
           </div>
         </div>
