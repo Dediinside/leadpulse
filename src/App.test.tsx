@@ -32,6 +32,15 @@ test('filters leads by email', () => {
   expect(screen.queryByText('Елена Брукс')).not.toBeInTheDocument();
 });
 
+test('filters leads by phone number', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByRole('searchbox'), { target: { value: '917 555 0172' } });
+
+  expect(screen.getByText('Ной Уильямс')).toBeInTheDocument();
+  expect(screen.queryByText('Елена Брукс')).not.toBeInTheDocument();
+});
+
 test('filters leads by status', () => {
   render(<App />);
 
