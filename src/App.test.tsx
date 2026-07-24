@@ -76,3 +76,11 @@ test('shows the lead source in the list', () => {
 
   expect(within(screen.getByRole('list')).getAllByText('Сайт')).toHaveLength(2);
 });
+
+test('shows the number of matching leads', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByRole('searchbox'), { target: { value: 'София' } });
+
+  expect(screen.getByText('Найдено: 1')).toBeInTheDocument();
+});
