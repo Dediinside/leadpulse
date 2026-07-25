@@ -102,3 +102,12 @@ test('resets active filters from the controls', () => {
 
   expect(screen.getByText('Найдено: 5')).toBeInTheDocument();
 });
+
+test('moves leads requiring attention to the top', () => {
+  render(<App />);
+
+  fireEvent.click(screen.getByLabelText('Сначала требующие внимания'));
+
+  const [, secondLead] = screen.getAllByRole('listitem');
+  expect(within(secondLead).getByText('Ной Уильямс')).toBeInTheDocument();
+});

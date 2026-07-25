@@ -23,6 +23,7 @@ export default function App() {
   const [status, setStatus] = useState<LeadStatus | 'all'>('all');
   const [source, setSource] = useState<Lead['source'] | 'all'>('all');
   const [withoutOwner, setWithoutOwner] = useState(false);
+  const [attentionFirst, setAttentionFirst] = useState(false);
   const attention = getAttentionLeads(initialLeads, displayNow);
   const openLeads = initialLeads.filter(({ status }) => !['won', 'lost'].includes(status));
   const answeredToday = initialLeads.filter(({ answeredAt }) => answeredAt?.startsWith('2026-07-20')).length;
@@ -31,13 +32,17 @@ export default function App() {
   ).filter(({ status: leadStatus }) => status === 'all' || leadStatus === status)
     .filter(({ source: leadSource }) => source === 'all' || leadSource === source)
     .filter(({ owner }) => !withoutOwner || !owner);
-  const hasFilters = Boolean(query || status !== 'all' || source !== 'all' || withoutOwner);
+  const sortedLeads = attentionFirst
+    ? [...visibleLeads].sort((left, right) => Number(attention.some(({ id }) => id === right.id)) - Number(attention.some(({ id }) => id === left.id)))
+    : visibleLeads;
+  const hasFilters = Boolean(query || status !== 'all' || source !== 'all' || withoutOwner || attentionFirst);
 
   const resetFilters = () => {
     setQuery('');
     setStatus('all');
     setSource('all');
     setWithoutOwner(false);
+    setAttentionFirst(false);
   };
 
   return (
@@ -115,11 +120,15 @@ export default function App() {
               <input type="checkbox" checked={withoutOwner} onChange={({ target }) => setWithoutOwner(target.checked)} />
               Без ответственного
             </label>
+            <label className="owner-filter">
+              <input type="checkbox" checked={attentionFirst} onChange={({ target }) => setAttentionFirst(target.checked)} />
+              Сначала требующие внимания
+            </label>
             {hasFilters && <button className="text-action" type="button" onClick={resetFilters}>Сбросить фильтры</button>}
           </div>
         </div>
         <div className="lead-list" role="list">
-          {visibleLeads.length > 0 ? visibleLeads.map((lead) => {
+          {sortedLeads.length > 0 ? sortedLeads.map((lead) => {
             const needsAttention = attention.some(({ id }) => id === lead.id);
             return (
               <article className="lead-row" key={lead.id} role="listitem">
