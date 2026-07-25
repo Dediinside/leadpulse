@@ -115,6 +115,7 @@ export default function App() {
               <input type="checkbox" checked={withoutOwner} onChange={({ target }) => setWithoutOwner(target.checked)} />
               Без ответственного
             </label>
+            {hasFilters && <button className="text-action" type="button" onClick={resetFilters}>Сбросить фильтры</button>}
           </div>
         </div>
         <div className="lead-list" role="list">
@@ -137,7 +138,6 @@ export default function App() {
             <div className="empty-state">
               <strong>Ничего не найдено</strong>
               <p>Измените параметры поиска или сбросьте фильтры.</p>
-              {hasFilters && <button className="text-action" type="button" onClick={resetFilters}>Сбросить фильтры</button>}
             </div>
           )}
         </div>

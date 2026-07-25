@@ -93,3 +93,12 @@ test('filters leads without an assigned owner', () => {
   expect(screen.getByText('Елена Брукс')).toBeInTheDocument();
   expect(screen.queryByText('Ной Уильямс')).not.toBeInTheDocument();
 });
+
+test('resets active filters from the controls', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByLabelText('Источник обращения'), { target: { value: 'Instagram' } });
+  fireEvent.click(screen.getByRole('button', { name: 'Сбросить фильтры' }));
+
+  expect(screen.getByText('Найдено: 5')).toBeInTheDocument();
+});
