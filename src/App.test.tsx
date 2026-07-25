@@ -111,3 +111,12 @@ test('moves leads requiring attention to the top', () => {
   const [, secondLead] = screen.getAllByRole('listitem');
   expect(within(secondLead).getByText('Ной Уильямс')).toBeInTheDocument();
 });
+
+test('hides completed leads when only open leads are selected', () => {
+  render(<App />);
+
+  fireEvent.click(screen.getByLabelText('Только открытые'));
+
+  expect(screen.getByText('Найдено: 4')).toBeInTheDocument();
+  expect(screen.queryByText('Амина Чен')).not.toBeInTheDocument();
+});

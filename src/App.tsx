@@ -24,6 +24,7 @@ export default function App() {
   const [source, setSource] = useState<Lead['source'] | 'all'>('all');
   const [withoutOwner, setWithoutOwner] = useState(false);
   const [attentionFirst, setAttentionFirst] = useState(false);
+  const [openOnly, setOpenOnly] = useState(false);
   const attention = getAttentionLeads(initialLeads, displayNow);
   const openLeads = initialLeads.filter(({ status }) => !['won', 'lost'].includes(status));
   const answeredToday = initialLeads.filter(({ answeredAt }) => answeredAt?.startsWith('2026-07-20')).length;
@@ -31,11 +32,12 @@ export default function App() {
     `${customer} ${company} ${email} ${phone}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
   ).filter(({ status: leadStatus }) => status === 'all' || leadStatus === status)
     .filter(({ source: leadSource }) => source === 'all' || leadSource === source)
-    .filter(({ owner }) => !withoutOwner || !owner);
+    .filter(({ owner }) => !withoutOwner || !owner)
+    .filter(({ status: leadStatus }) => !openOnly || !['won', 'lost'].includes(leadStatus));
   const sortedLeads = attentionFirst
     ? [...visibleLeads].sort((left, right) => Number(attention.some(({ id }) => id === right.id)) - Number(attention.some(({ id }) => id === left.id)))
     : visibleLeads;
-  const hasFilters = Boolean(query || status !== 'all' || source !== 'all' || withoutOwner || attentionFirst);
+  const hasFilters = Boolean(query || status !== 'all' || source !== 'all' || withoutOwner || attentionFirst || openOnly);
 
   const resetFilters = () => {
     setQuery('');
@@ -43,6 +45,7 @@ export default function App() {
     setSource('all');
     setWithoutOwner(false);
     setAttentionFirst(false);
+    setOpenOnly(false);
   };
 
   return (
@@ -123,6 +126,10 @@ export default function App() {
             <label className="owner-filter">
               <input type="checkbox" checked={attentionFirst} onChange={({ target }) => setAttentionFirst(target.checked)} />
               Сначала требующие внимания
+            </label>
+            <label className="owner-filter">
+              <input type="checkbox" checked={openOnly} onChange={({ target }) => setOpenOnly(target.checked)} />
+              Только открытые
             </label>
             {hasFilters && <button className="text-action" type="button" onClick={resetFilters}>Сбросить фильтры</button>}
           </div>
