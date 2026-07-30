@@ -146,6 +146,7 @@ export default function App() {
                   <strong>{lead.customer}</strong>
                   <span>{lead.company}</span>
                   <span>{lead.email}</span>
+                  <span>{lead.phone}</span>
                 </div>
                 <p className="lead-message">{lead.message}</p>
                 <span className="source">{sourceLabel[lead.source]}</span>

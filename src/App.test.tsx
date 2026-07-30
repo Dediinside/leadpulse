@@ -91,6 +91,12 @@ test('shows the lead email in the list', () => {
   expect(screen.getByText('elena@brooks.co')).toBeInTheDocument();
 });
 
+test('shows the lead phone in the list', () => {
+  render(<App />);
+
+  expect(screen.getByText('+1 415 555 0128')).toBeInTheDocument();
+});
+
 test('shows the number of matching leads', () => {
   render(<App />);
 
