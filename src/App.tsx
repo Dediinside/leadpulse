@@ -95,7 +95,7 @@ export default function App() {
           <div>
             <p className="eyebrow">Входящие</p>
             <h2 id="inbox-heading">Последние заявки</h2>
-            <p className="lead-count">Найдено: {visibleLeads.length}</p>
+            <p className="lead-count" aria-live="polite">Найдено: {visibleLeads.length}</p>
           </div>
           <div className="lead-controls">
             <label className="search-field">

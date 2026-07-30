@@ -111,6 +111,12 @@ test('shows the number of matching leads', () => {
   expect(screen.getByText('Найдено: 1')).toBeInTheDocument();
 });
 
+test('announces changes to the number of matching leads', () => {
+  render(<App />);
+
+  expect(screen.getByText('Найдено: 5')).toHaveAttribute('aria-live', 'polite');
+});
+
 test('filters leads without an assigned owner', () => {
   render(<App />);
 
