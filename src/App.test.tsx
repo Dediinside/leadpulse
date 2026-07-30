@@ -41,6 +41,14 @@ test('filters leads by phone number', () => {
   expect(screen.queryByText('Елена Брукс')).not.toBeInTheDocument();
 });
 
+test('finds a lead by a phone number without formatting', () => {
+  render(<App />);
+
+  fireEvent.change(screen.getByRole('searchbox'), { target: { value: '19175550172' } });
+
+  expect(screen.getByText('Ной Уильямс')).toBeInTheDocument();
+});
+
 test('filters leads by status', () => {
   render(<App />);
 

@@ -28,8 +28,10 @@ export default function App() {
   const attention = getAttentionLeads(initialLeads, displayNow);
   const openLeads = initialLeads.filter(({ status }) => !['won', 'lost'].includes(status));
   const answeredToday = initialLeads.filter(({ answeredAt }) => answeredAt?.startsWith('2026-07-20')).length;
+  const normalizedPhoneQuery = query.replace(/\D/g, '');
   const visibleLeads = initialLeads.filter(({ customer, company, email, phone }) =>
-    `${customer} ${company} ${email} ${phone}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()),
+    `${customer} ${company} ${email} ${phone}`.toLocaleLowerCase().includes(query.trim().toLocaleLowerCase()) ||
+    Boolean(normalizedPhoneQuery) && phone.replace(/\D/g, '').includes(normalizedPhoneQuery),
   ).filter(({ status: leadStatus }) => status === 'all' || leadStatus === status)
     .filter(({ source: leadSource }) => source === 'all' || leadSource === source)
     .filter(({ owner }) => !withoutOwner || !owner)
