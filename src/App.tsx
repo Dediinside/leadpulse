@@ -145,6 +145,7 @@ export default function App() {
                 <div className="lead-identity">
                   <strong>{lead.customer}</strong>
                   <span>{lead.company}</span>
+                  <span>{lead.email}</span>
                 </div>
                 <p className="lead-message">{lead.message}</p>
                 <span className="source">{sourceLabel[lead.source]}</span>

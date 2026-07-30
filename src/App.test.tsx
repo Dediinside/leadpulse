@@ -85,6 +85,12 @@ test('shows the lead source in the list', () => {
   expect(within(screen.getByRole('list')).getAllByText('Сайт')).toHaveLength(2);
 });
 
+test('shows the lead email in the list', () => {
+  render(<App />);
+
+  expect(screen.getByText('elena@brooks.co')).toBeInTheDocument();
+});
+
 test('shows the number of matching leads', () => {
   render(<App />);
 
