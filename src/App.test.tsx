@@ -97,6 +97,12 @@ test('shows the lead phone in the list', () => {
   expect(screen.getByText('+1 415 555 0128')).toBeInTheDocument();
 });
 
+test('keeps the full lead message available as a hint', () => {
+  render(<App />);
+
+  expect(screen.getByText('Нужна смета на ремонт кухни до начала августа.')).toHaveAttribute('title');
+});
+
 test('shows the number of matching leads', () => {
   render(<App />);
 

@@ -148,7 +148,7 @@ export default function App() {
                   <span>{lead.email}</span>
                   <span>{lead.phone}</span>
                 </div>
-                <p className="lead-message">{lead.message}</p>
+                <p className="lead-message" title={lead.message}>{lead.message}</p>
                 <span className="source">{sourceLabel[lead.source]}</span>
                 <span className={`status status-${lead.status}`}>{statusLabel[lead.status]}</span>
                 <span className="owner">{lead.owner ?? 'Не назначен'}</span>
